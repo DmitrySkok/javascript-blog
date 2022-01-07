@@ -157,13 +157,21 @@ function generateAuthors(){ /*[DONE] */
     const authorsWrapper = article.querySelector(optPostAuthorSelector);
     let html = '';
     const authorTags = article.getAttribute('data-author');
-    // console.log(authorTags);
-    for (let tag of authorTags){
-      const linkHTML = '<a href="'+ tag +'">'+ tag +'</a>';
-      html = html + linkHTML;
-    }
+    const linkHTML = '<a href="#'+ authorTags +'">'+ authorTags +'</a>';
+    html = html + linkHTML;
     authorsWrapper.innerHTML = 'by' + ' ' + html;
   }
 }
 
 generateAuthors();
+
+function authorClickHandler(event){
+  event.preventDefault();
+  const clickedElement = this;
+  const href = clickedElement.getAttribute('href');
+
+}
+
+function addClickListenersToAuthors() {
+
+}
