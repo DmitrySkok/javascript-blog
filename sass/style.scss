@@ -117,8 +117,25 @@ body {
 
 .post-tags {
   display: flex;
-  
+
   p {
     margin: 0 10px 0 0;
   }
+}
+
+/* Tags */
+.tag-size-1 {
+  font-size: 20%;
+}
+.tag-size-2 {
+  font-size: 40%;
+}
+.tag-size-3 {
+  font-size: 60%;
+}
+.tag-size-4 {
+  font-size: 80%;
+}
+.tag-size-5 {
+  font-size: 100%;
 }
