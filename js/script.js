@@ -151,7 +151,7 @@ let allTagsHTML = '';
 /* [NEW] START LOOP: for each tag in allTags: */
 for(let tag in allTags){
   /* [NEW] generate code of a link and add it to allTagsHTML */
-  allTagsHTML += '<li class="'+ calculateTagClass(allTags[tag], tagsParams) + '">' + tag + ' (' + allTags[tag] + ') ' + '</li>';
+  allTagsHTML += '<li class="'+ calculateTagClass(allTags[tag], tagsParams) + '"><a href="#tag-' + tag + '">' + tag + '</a> (' + allTags[tag] + ') ' + '</li>';
 }
 /* [NEW] END LOOP: for each tag in allTags: */
 
