@@ -3,6 +3,13 @@
 //     const links = document.querySelectorAll('.titles a');
 //     console.log('links:', links);
 //   });
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
+  articleAuthorLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  tagLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  authorLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+}
 
 const titleClickHandler = function (event) {
   event.preventDefault();
@@ -65,7 +72,10 @@ function generateTitleLinks(customSelector = '') {
     /*[DONE] find the title element */
     const articleTitle = article.querySelector(optTitleSelector).innerHTML; // ???
     /*[DONE] get the title from the title element and create HTML of the link */
-    const linkHTML = '<li><a href="#' + articleId + '":><span>' + articleTitle + '</span></a></li>';
+    // const linkHTML = '<li><a href="#' + articleId + '":><span>' + articleTitle + '</span></a></li>';
+    //[NEW Handlebars]
+    const linkHTMLData = {id: articleId, title: articleTitle};
+    const linkHTML = templates.articleLink(linkHTMLData);
     /*[DONE] insert link into titleList */
     // article.insertAdjacentHTML('afterend', linkHTML);
     html = html + linkHTML;
@@ -87,7 +97,7 @@ function calculateTagsParams(tags){
   for(let tag in tags){
     params.max = Math.max(tags[tag], params.max);
     params.min = Math.min(tags[tag], params.min);
-    console.log(tag + ' is used ' + tags[tag] + ' times');
+    // console.log(tag + ' is used ' + tags[tag] + ' times');
   }
   return params;
 }
@@ -145,19 +155,32 @@ function generateTags(){
 // console.log(allTags);
 // [NEW]
 const tagsParams = calculateTagsParams(allTags);
-console.log('tagsParams:', tagsParams)
+// console.log('tagsParams:', tagsParams)
 /* [NEW] create variable for all links HTML code */
-let allTagsHTML = '';
+// let allTagsHTML = '';
+// [NEW Handlebars]
+const allTagsData = {tags: []};
 
 /* [NEW] START LOOP: for each tag in allTags: */
 for(let tag in allTags){
   /* [NEW] generate code of a link and add it to allTagsHTML */
-  allTagsHTML += '<li class="'+ calculateTagClass(allTags[tag], tagsParams) + '"><a href="#tag-' + tag + '">' + tag + '</a> (' + allTags[tag] + ') ' + '</li>';
+  // const tagLinkHTML = '<li class="'+ calculateTagClass(allTags[tag], tagsParams) + '"><a href="#tag-' + tag + '">' + tag + '</a> (' + allTags[tag] + ') ' + '</li>';
+  // allTagsHTML += '<li class="'+ calculateTagClass(allTags[tag], tagsParams) + '"><a href="#tag-' + tag + '">' + tag + '</a> (' + allTags[tag] + ') ' + '</li>';
+  // allTagsHTML += tagLinkHTML;
+  //[NEW Handlebars]
+  allTagsData.tags.push({
+    tag: tag,
+    count: allTags[tag],
+    className: calculateTagClass(allTags[tag], tagsParams)
+  });
 }
 /* [NEW] END LOOP: for each tag in allTags: */
 
 /*[NEW] add HTML from allTagsHTML to tagList */
-tagList.innerHTML = allTagsHTML;
+// tagList.innerHTML = allTagsHTML;
+//[NEW Handlebars]
+tagList.innerHTML = templates.tagCloudLink(allTagsData);
+console.log(tagList);
 }
 
 generateTags();
