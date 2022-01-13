@@ -6,9 +6,9 @@
 const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
   tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
-  articleAuthorLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
   tagLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
-  authorLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  authorListLink: Handlebars.compile(document.querySelector('#template-author-list').innerHTML),
 }
 
 const titleClickHandler = function (event) {
@@ -233,9 +233,12 @@ function generateAuthors(){ /*[DONE] */
     const authorsWrapper = article.querySelector(optPostAuthorSelector);
     let html = '';
     const authorTags = article.getAttribute('data-author');
-    const linkHTML = '<a href="'+ authorTags +'">'+ authorTags +'</a>';
+    // const linkHTML = '<a href="'+ authorTags +'">'+ authorTags +'</a>';
+    const linkHTMLData = {authorName: authorTags};
+    const linkHTML = templates.authorListLink(linkHTMLData);
     html = html + linkHTML;
     authorsWrapper.innerHTML = 'by' + ' ' + html;
+    console.log(authorsWrapper);
     if(!allAuthors[authorTags]){
       allAuthors[authorTags] = 1;
     } else {
@@ -243,11 +246,16 @@ function generateAuthors(){ /*[DONE] */
     }
   }
   const authorList = document.querySelector(optAuthorsListSelector);
-  let allAuthorsHTML = '';
+  // let allAuthorsHTML = '';
+  const allAuthorsData = {authors: []};
   for(let author in allAuthors){
-    allAuthorsHTML += '<li class="post-author"><a href="'+ author +'">'+ author +'</a></li>';
+    // allAuthorsHTML += '<li class="post-author"><a href="'+ author +'">'+ author +'</a></li>';
+    allAuthorsData.authors.push({
+      author: author
+    });
   }
-  authorList.innerHTML = allAuthorsHTML;
+  authorList.innerHTML = templates.authorListLink(allAuthorsData);
+  console.log(authorList);
 }
 
 generateAuthors();
