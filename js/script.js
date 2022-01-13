@@ -222,7 +222,7 @@ function generateAuthors(){ /*[DONE] */
   const authorList = document.querySelector(optAuthorsListSelector);
   let allAuthorsHTML = '';
   for(let author in allAuthors){
-    allAuthorsHTML += '<li><a href="'+ author +'">'+ author +'</a></li>';
+    allAuthorsHTML += '<li class="post-author"><a href="'+ author +'">'+ author +'</a></li>';
   }
   authorList.innerHTML = allAuthorsHTML;
 }
@@ -231,7 +231,7 @@ generateAuthors();
 
 function authorClickHandler(event){
   event.preventDefault();
-  const clickedElement = this; // ???
+  const clickedElement = this;
   const href = clickedElement.getAttribute('href');
   const authorActiveLinks = document.querySelectorAll('.post-author a.active');
   for (let activeLink of authorActiveLinks) {
